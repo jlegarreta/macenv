@@ -10,7 +10,7 @@ make install
 ```
 ## Usage
 ```
-usage: macenv.sh (create|exec) DIR
+usage: macenv (create|exec) DIR
 ```
 ## Example
 ```
