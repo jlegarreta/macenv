@@ -10,12 +10,31 @@ make install
 ```
 ## Usage
 ```
-usage: macenv (create|exec) DIR
+usage: macenv (ls|create|rm|cp|ln|exec) ENV ...
 ```
 ## Example
 ```
 $ macenv create myenv
-$ macenv exec myenv
+$ macenv ls
+myenv
+$ touch foo bar
+# If no destination is specified, the file is copied to the root of the env
+$ macenv cp myenv foo
+$ macenv cp myenv foo foo2
+# If the destination ends in a slash, the source file name is preserved and the destination is created as a directory
+$ macenv cp myenv foo dir/
+$ macenv ln myenv bar bar2
+$ macenv exec myenv 'find .'
+.
+./bar2
+./.config.sb
+./foo
+./dir
+./dir/foo
+./foo2
+$ macenv exec myenv 'ls -l bar2'
+lrwxr-xr-x  1 jdoe  staff  64 Jan 23 23:54 bar2 -> /Users/jdoe/bar
+$ macenv exec myenv bash
 
 The default interactive shell is now zsh.
 To update your account to use zsh, please run `chsh -s /bin/zsh`.
@@ -26,8 +45,10 @@ SHELL=/bin/bash
 TMPDIR=/var/folders/c3/rfxqqg_n7sh9gc2f44mqdxt80000gr/T/
 USER=jdoe
 PATH=/usr/bin:/usr/sbin:/bin:/sbin
-PWD=/Users/jdoe/myenv
+PWD=/Users/jdoe/.local/macenv/env/myenv
 SHLVL=1
-HOME=/Users/jdoe/myenv
+HOME=/Users/jdoe/.local/macenv/env/myenv
 _=/usr/bin/env
+$ macenv rm myenv
+$ macenv ls
 ```
